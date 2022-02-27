@@ -3,14 +3,41 @@
 
 import * as React from 'react'
 
-function Greeting({initialName = ''}) {
-  const storedName = window.localStorage.getItem('name')
-  const [name, setName] = React.useState(storedName ? storedName : initialName)
+function useStateOverLocalStorage(
+  key,
+  defaultValue,
+  {serialize = JSON.stringify, deserialize = JSON.parse} = {},
+) {
+  console.log('calling hook')
+  const storedValue = window.localStorage.getItem(key)
+    ? deserialize(window.localStorage.getItem(key))
+    : undefined
+
+  const initialValue = storedValue
+    ? storedValue
+    : typeof defaultValue === 'function'
+    ? defaultValue()
+    : defaultValue
+
+  const [value, setValue] = React.useState(initialValue)
+
+  const prevKeyRef = React.useRef(key)
 
   React.useEffect(() => {
-    window.localStorage.setItem('name', 'Stored: ' + name)
-  }, [name])
-  
+    const prevKey = prevKeyRef.current
+    if (prevKey !== key) {
+      // allow key renaming
+      window.localStorage.removeItem(prevKey)
+    }
+    window.localStorage.setItem(key, serialize(value))
+    prevKeyRef.current = key
+  }, [key, value, serialize])
+
+  return [value, setValue]
+}
+
+function Greeting({initialName = ''}) {
+  const [name, setName] = useStateOverLocalStorage('name', initialName)
 
   function handleChange(event) {
     event.preventDefault()
@@ -30,7 +57,7 @@ function Greeting({initialName = ''}) {
 }
 
 function App() {
-  return <Greeting initialName='Are you Bob?' />
+  return <Greeting initialName="Are you Bob?" />
 }
 
 export default App
