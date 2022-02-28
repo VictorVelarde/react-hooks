@@ -17,10 +17,10 @@ function Child() {
   })
 
   React.useEffect(() => {
-    console.log('%c    Child: useEffect(() => {})', 'color: LightCoral')
+    console.log('%c    Child: (1a) useEffect(() => {})', 'color: LightCoral')
     return () => {
       console.log(
-        '%c    Child: useEffect(() => {}) cleanup 🧹',
+        '%c    Child: (1a) useEffect(() => {}) cleanup 🧹',
         'color: LightCoral',
       )
     }
@@ -28,22 +28,25 @@ function Child() {
 
   React.useEffect(() => {
     console.log(
-      '%c    Child: useEffect(() => {}, [])',
+      '%c    Child: (1b) useEffect(() => {}, [])',
       'color: MediumTurquoise',
     )
     return () => {
       console.log(
-        '%c    Child: useEffect(() => {}, []) cleanup 🧹',
+        '%c    Child: (1b) useEffect(() => {}, []) cleanup 🧹',
         'color: MediumTurquoise',
       )
     }
   }, [])
 
   React.useEffect(() => {
-    console.log('%c    Child: useEffect(() => {}, [count])', 'color: HotPink')
+    console.log(
+      '%c    Child: (1c) useEffect(() => {}, [count])',
+      'color: HotPink',
+    )
     return () => {
       console.log(
-        '%c    Child: useEffect(() => {}, [count]) cleanup 🧹',
+        '%c    Child: (1c) useEffect(() => {}, [count]) cleanup 🧹',
         'color: HotPink',
       )
     }
@@ -69,27 +72,30 @@ function App() {
   })
 
   React.useEffect(() => {
-    console.log('%cApp: useEffect(() => {})', 'color: LightCoral')
+    console.log('%cApp: (1) useEffect(() => {})', 'color: LightCoral')
     return () => {
-      console.log('%cApp: useEffect(() => {}) cleanup 🧹', 'color: LightCoral')
+      console.log(
+        '%cApp: (1) useEffect(() => {}) cleanup 🧹',
+        'color: LightCoral',
+      )
     }
   })
 
   React.useEffect(() => {
-    console.log('%cApp: useEffect(() => {}, [])', 'color: MediumTurquoise')
+    console.log('%cApp: (2) useEffect(() => {}, [])', 'color: MediumTurquoise')
     return () => {
       console.log(
-        '%cApp: useEffect(() => {}, []) cleanup 🧹',
+        '%cApp: (2) useEffect(() => {}, []) cleanup 🧹',
         'color: MediumTurquoise',
       )
     }
   }, [])
 
   React.useEffect(() => {
-    console.log('%cApp: useEffect(() => {}, [showChild])', 'color: HotPink')
+    console.log('%cApp: (3) useEffect(() => {}, [showChild])', 'color: HotPink')
     return () => {
       console.log(
-        '%cApp: useEffect(() => {}, [showChild]) cleanup 🧹',
+        '%cApp: (3) useEffect(() => {}, [showChild]) cleanup 🧹',
         'color: HotPink',
       )
     }
